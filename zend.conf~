@@ -1,0 +1,67 @@
+[group:zend-lighttpd]
+program=lighttpd,php-fcgi
+
+[group:zend]
+program=lighttpd,php-fcgi,zend-monitor,zend-scd,zend-zdd,zend-zsd,zend-jqd,apache2
+
+[program:lighttpd]
+command=/usr/local/zend/gui/lighttpd/sbin/lighttpd -m /usr/local/zend/gui/lighttpd/lib -f /usr/local/zend/gui/lighttpd/etc/lighttpd.conf -D
+numprocs=1
+autostart=true
+autorestart=true
+
+[fcgi-program:php-fcgi]
+command=/usr/local/zend/gui/lighttpd/sbin/php -c /usr/local/zend/gui/lighttpd/etc/php-fcgi.ini
+socket=unix:///usr/local/zend/gui/lighttpd/tmp/php-fastcgi.socket
+process_name=%(program_name)s_%(process_num)02d
+numprocs=5
+priority=999
+autostart=true
+autorestart=unexpected
+startsecs=1
+startretries=3
+exitcodes=0,2
+stopsignal=QUIT
+stopwaitsecs=10
+user=zend
+group=zend
+redirect_stderr=true
+
+[program:zend-monitor]
+command=/usr/local/zend/bin/MonitorNode /usr/local/zend/etc/monitor_node.ini /usr/local/zend/etc/conf.d -e
+user=zend
+numprocs=1
+autostart=true
+autorestart=true
+
+[program:zend-scd]
+command=/usr/local/zend/bin/scd -p /usr/local/zend/etc/scd.ini -e
+user=zend
+numprocs=1
+autostart=true
+autorestart=true
+
+[program:zend-zdd]
+command=/usr/local/zend/bin/zdd /usr/local/zend/etc/zdd.ini -e
+user=zend
+numprocs=1
+autostart=true
+autorestart=true
+
+[program:zend-zsd]
+command=/usr/local/zend/bin/zsd /usr/local/zend/etc/zsd.ini -e
+user=zend
+numprocs=1
+autostart=true
+autorestart=true
+
+[program:zend-jqd]
+command=/usr/local/zend/bin/jqd -f /usr/local/zend/etc/jqd.ini -e
+user=zend
+numprocs=1
+autostart=true
+autorestart=true
+
+[program:apache2]
+command=/start.sh
+redirect_stderr=true
