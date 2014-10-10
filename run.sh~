@@ -1,6 +1,0 @@
-#!/bin/bash
-
-/usr/local/zend/bin/zsd /usr/local/zend/etc/zsd.ini --generate-license
-/etc/init.d/zend-server start
-
-exec supervisord -n
