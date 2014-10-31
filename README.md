@@ -64,7 +64,7 @@ MySQL
 -----
 If you'd like to have the docker container with a preinstalled MySQL database, you can run the container with some additional environment variables:
 ```
-docker run -e INSTALL_MYSQL=true -e MYSQL_PASSWORD=<password> -e MYSQL_USERNAME=<username> zend-server:8.0Beta
+docker run -e INSTALL_MYSQL=true -e MYSQL_PASSWORD=<password> -e MYSQL_USERNAME=<username> zend-server:8.0Beta-php5.5
 ```
 The DB is being installed on the fly - this is probably not the "Docker way" to go (because you should run a MySQL container and link it to the App Server container), but it can be very convenient...
 
@@ -72,7 +72,7 @@ Cluster
 -------
 To start a Zend Server cluster, execute the following command for each cluster node:
 ```
-docker run -e MYSQL_HOSTNAME=<db-ip> -e MYSQL_PORT=3306 -e MYSQL_USERNAME=<username> -e MYSQL_PASSWORD=<password> -e MYSQL_DBNAME=zendserver zend-server:8.0Beta
+docker run -e MYSQL_HOSTNAME=<db-ip> -e MYSQL_PORT=3306 -e MYSQL_USERNAME=<username> -e MYSQL_PASSWORD=<password> -e MYSQL_DBNAME=zendserver zend-server:8.0Beta-php5.5
 ```
 As you can see, a MySQL DB is mandatory for Zend Server cluster. An easy way to get one in Docker is to follow the instructions from https://github.com/tutumcloud/tutum-docker-mysql
 
