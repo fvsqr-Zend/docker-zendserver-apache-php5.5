@@ -1,13 +1,12 @@
-# Zend Server
 #
-# Version 0.1
-
-# TODO:
-# - version as a variable (both php and ZS)
+# Zend Server 8.0 Beta
+#
 
 FROM ubuntu:trusty
+MAINTAINER Jan Burkl <jan@zend.com>
 
 ADD run.sh /run.sh
+ADD my.cnf /etc/mysql/conf.d/my.cnf
 ADD repo_installer_early_access /repo_installer_early_access
 
 RUN chmod 775 /*.sh
