@@ -74,6 +74,7 @@ To start a Zend Server cluster, execute the following command for each cluster n
 ```
 docker run -e MYSQL_HOSTNAME=<db-ip> -e MYSQL_PORT=3306 -e MYSQL_USERNAME=<username> -e MYSQL_PASSWORD=<password> -e MYSQL_DBNAME=zendserver zend-server:8.0Beta-php5.5
 ```
+Please note that you have to specify all of the environment variables from the command above to join the new Zend Server to the cluster.
 As you can see, a MySQL DB is mandatory for Zend Server cluster. An easy way to get one in Docker is to follow the instructions from https://github.com/tutumcloud/tutum-docker-mysql
 
 By calling the command above with the flag "-d" multiple times in a row, you'll set up a cluster within seconds. As written above, the bootstrapping process can tike some time, so that the complete cluster is up and running within a few minutes.
