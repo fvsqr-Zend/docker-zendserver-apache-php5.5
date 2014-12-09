@@ -7,12 +7,12 @@ MAINTAINER Jan Burkl <jan@zend.com>
 
 ADD run.sh /run.sh
 ADD my.cnf /etc/mysql/conf.d/my.cnf
-ADD repo_installer_early_access /repo_installer_early_access
+ADD ZendServer-RepositoryInstaller-linux /ZendServer-RepositoryInstaller-linux
 
 RUN chmod 775 /*.sh
-RUN chmod 775 /repo_installer_early_access/*.sh
+RUN chmod 775 /ZendServer-RepositoryInstaller-linux/*.sh
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y supervisor wget && wget http://repos.zend.com/zend.key -O- |apt-key add -
-RUN /repo_installer_early_access/install_zs.sh 5.5 --automatic
+RUN /ZendServer-RepositoryInstaller-linux/install_zs.sh 5.5 --automatic
 RUN /usr/local/zend/bin/zendctl.sh stop
 
 ADD zend.conf /etc/supervisor/conf.d/zend.conf
