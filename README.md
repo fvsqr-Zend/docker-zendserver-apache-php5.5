@@ -1,17 +1,17 @@
-Zend Server 8.0 Beta in Docker
+Zend Server 8.0 in Docker
 ================================
 
 Build your own bootstrapped Docker container for Zend Server with Apache and PHP 5.5.
 
 To build run:
 ```
-docker build -t zend-server:8.0Beta-php5.5 .
+docker build -t zend-server:8.0-php5.5 .
 ```
 from within the cloned directory (please note the trailing dot).
 
 To run:
 ```
-docker run -d -P zend-server:8.0Beta-php5.5
+docker run -d -P zend-server:8.0-php5.5
 ```
 This starts the container in a daemonized mode, that means that the container is still available after closing the terminal window.
 
@@ -19,7 +19,7 @@ Docker esposes port 80 and 443 for http(s) and port 10081 and 10082 for Zend Ser
 
 You can also map manually, for example
 ```
-docker run -d -p 88:80 -p 10088:10081 zend-server:8.0Beta-php5.5
+docker run -d -p 88:80 -p 10088:10081 zend-server:8.0-php5.5
 ```
 This command redirects port 80 to port 88, and port 10081 (Zend Server UI port) to port 10088.
 
@@ -27,11 +27,11 @@ Internal / Development mode
 ---------------------------
 If there's no need to expose ports at all, beacuse all you need is an internal dev system which is only available on your personal host, you can also start a container like this:
 ```
-docker run -d zend-server:8.0Beta-php5.5
+docker run -d zend-server:8.0-php5.5
 ```
 or
 ```
-docker run zend-server:8.0Beta-php5.5
+docker run zend-server:8.0-php5.5
 ```
 You can access the App and Zend Server UI via the default ports 80, 443, 10081, 10082, but now you have to use the IP address of the container. You can find it in the result of
 ```
@@ -64,7 +64,7 @@ MySQL
 -----
 If you'd like to have the docker container with a preinstalled MySQL database, you can run the container with some additional environment variables:
 ```
-docker run -e INSTALL_MYSQL=true -e MYSQL_PASSWORD=<password> -e MYSQL_USERNAME=<username> zend-server:8.0Beta-php5.5
+docker run -e INSTALL_MYSQL=true -e MYSQL_PASSWORD=<password> -e MYSQL_USERNAME=<username> zend-server:8.0-php5.5
 ```
 The DB is being installed on the fly - this is probably not the "Docker way" to go (because you should run a MySQL container and link it to the App Server container), but it can be very convenient...
 
@@ -72,7 +72,7 @@ Cluster
 -------
 To start a Zend Server cluster, execute the following command for each cluster node:
 ```
-docker run -e MYSQL_HOSTNAME=<db-ip> -e MYSQL_PORT=3306 -e MYSQL_USERNAME=<username> -e MYSQL_PASSWORD=<password> -e MYSQL_DBNAME=zendserver zend-server:8.0Beta-php5.5
+docker run -e MYSQL_HOSTNAME=<db-ip> -e MYSQL_PORT=3306 -e MYSQL_USERNAME=<username> -e MYSQL_PASSWORD=<password> -e MYSQL_DBNAME=zendserver zend-server:8.0-php5.5
 ```
 Please note that you have to specify all of the environment variables from the command above to join the new Zend Server to the cluster.
 As you can see, a MySQL DB is mandatory for Zend Server cluster. An easy way to get one in Docker is to follow the instructions from https://github.com/tutumcloud/tutum-docker-mysql

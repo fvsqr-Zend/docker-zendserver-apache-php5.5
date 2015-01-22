@@ -1,5 +1,5 @@
 #
-# Zend Server 8.0 Beta
+# Zend Server 8.0
 #
 
 FROM ubuntu:trusty

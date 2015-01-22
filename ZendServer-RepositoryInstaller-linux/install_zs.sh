@@ -1,6 +1,6 @@
 #!/bin/sh
 
-ZS_VERSION=7.0
+ZS_VERSION=8.0
 
 usage()
 {
@@ -13,8 +13,7 @@ EOF
 return 0
 }
 
-# on OEL, /etc/issue states "Enterprise Linux Enterprise Linux Server"
-SUPPORTED_OS='CentOS|Red Hat Enterprise Linux Server|Enterprise Linux Enterprise Linux Server|SUSE|Debian GNU/Linux|Ubuntu|Oracle Linux Server'
+SUPPORTED_OS='CentOS|Red Hat Enterprise Linux Server|SUSE|Debian GNU/Linux|Ubuntu|Oracle Linux Server'
 
 
 if `which lsb_release > /dev/null 2>&1`; then
@@ -29,19 +28,21 @@ else
 	exit 1
 fi
 	
+# on OEL 5, /etc/issue states "Enterprise Linux Enterprise Linux Server"
+UNSUPPORTED_OS='CentOS release 5|Red Hat Enterprise Linux Server release 5|Enterprise Linux Enterprise Linux Server 5'
 if ! echo $CURRENT_OS | egrep -q "$SUPPORTED_OS"; then
-cat <<EOF
-
-Unable to install: Your distribution is not suitable for installation using
-Zend's DEB/RPM repositories (based on either lsb_release or /etc/issue).
-
-EOF
-    exit 1
+		echo "Your Linux distribution isn't supported by Zend Server $ZS_VERSION. For a list of supported Linux distributions, "
+		echo "see system requirements at http://files.zend.com/help/Zend-Server/zend-server.htm#system_requirements.htm"
+		exit 1
+elif echo $CURRENT_OS | egrep -q "$UNSUPPORTED_OS" ; then
+		echo "Your Linux distribution isn't supported anymore by Zend Server $ZS_VERSION. For a list of supported Linux distributions, "
+		echo "see system requirements at http://files.zend.com/help/Zend-Server/zend-server.htm#system_requirements.htm"
+		exit 1
 fi
 
 # -v or --version
 if [ "$1" = "-v" -o "$1" = "--version" ]; then
-	echo "`basename $0` version $ZS_VERSION (build: \$Revision: 90202 $)"
+	echo "`basename $0` version $ZS_VERSION (build: \$Revision: 93635 $)"
 	usage
 	exit 0
 fi
@@ -175,7 +176,9 @@ if [ "$UPGRADE" = "1" ]; then
 		echo "Upgrade from ZendServer cluster manager isn't supported."
 		exit 2
 	elif [ "$PRODUCT_VERSION" = "5.0.4" -o "$PRODUCT_VERSION" = "5.1.0" -o "$PRODUCT_VERSION" = "5.5.0"  -o "$PRODUCT_VERSION" = "5.6.0" ]; then
-		echo "Upgrade from version $PRODUCT_VERSION isn't supported."
+		echo "Zend Server does not support a direct upgrade from versions older than Zend Server 6.0."
+		echo "Please first upgrade to Zend Server 6.0 before attempting to perform this upgrade again."
+		echo "For detailed instructions, please contact our Support team at http://www.zend.com/en/support-center."
 		exit 2
 	elif [ "$INSTALLED_PHP_MAJOR" = "5.4" -a "$PHP" = "5.3" ]; then
 		echo "Downgrade from PHP $INSTALLED_PHP_MAJOR to $PHP isn't supported."
@@ -288,7 +291,7 @@ elif which yum 2> /dev/null; then
 		fi
 		SYNC_COMM="sed -i \"s/\\\$basearch/$ARCH/g\" ${TARGET_REPO_FILE};"
 	else
-		if echo $CURRENT_OS | grep -q -E "CentOS release 5|CentOS release 6|Red Hat Enterprise Linux Server release 5|Red Hat Enterprise Linux Server release 6"; then
+		if echo $CURRENT_OS | grep -q -E "CentOS release 5|CentOS release 6|Red Hat Enterprise Linux Server release 5|Red Hat Enterprise Linux Server release 6|Enterprise Linux Enterprise Linux Server release 5|Oracle Linux Server release 6"; then
 			# RHEL / Centos 5 and 6
 			REPO_FILE=`dirname $0`/zend.rpm.repo
 			read -r -d '' REPOSITORY_CONTENT <<-'EOF'
@@ -306,7 +309,7 @@ elif which yum 2> /dev/null; then
 				gpgcheck=1
 				gpgkey=http://repos.zend.com/zend.key
 			EOF
-		elif echo $CURRENT_OS | grep -q -E "CentOS Linux release 7|Red Hat Enterprise Linux Server release 7"; then
+		elif echo $CURRENT_OS | grep -q -E "CentOS Linux release 7|Red Hat Enterprise Linux Server release 7|Oracle Linux Server release 7"; then
 			# RHEL / Centos 7
 			REPO_FILE=`dirname $0`/zend.rpm_apache2.4.repo
 			read -r -d '' REPOSITORY_CONTENT <<-'EOF'
@@ -491,7 +494,7 @@ if [ "$UPGRADE" = "1" ]; then
 		# PHP upgrade
 
 		EXTRA_PACKAGES="zend-server-framework-dojo zend-server-framework-extras source-zend-server pdo-informix-zend-server pdo-ibm-zend-server ibmdb2-zend-server java-bridge-zend-server \-javamw-zend-server"
-		WHAT_TO_INSTALL_EXTRA=""
+		WHAT_TO_INSTALL_EXTRA="zend-server-zray-extensions"
 
 		# Find which extra packages we have and should be installed
 		for package in $EXTRA_PACKAGES; do 

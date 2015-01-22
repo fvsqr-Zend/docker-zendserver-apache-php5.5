@@ -31,20 +31,14 @@ update your installation or uninstall packages.
 
 Zend Server and PHP Upgrade Scenarios
 =====================================
-It is recommended to install early access version on a clean machine.
+The script upgrades your Zend Server and PHP versions, according to your 
+current configurations and target version passed.
+The script supports the following upgrades:
+- Zend Server 5.6 to current Zend Server 6.x version
+- All Zend Server and PHP upgrades from Zend Server 6.x to current Zend Server 6.x version.
 
-In general the script supports :
-    The script upgrades your Zend Server and PHP versions, according to your 
-    current configurations and target version passed.
-
-    The script supports the following upgrades:
-    - Zend Server 5.6 to current Zend Server early-access version
-    - All Zend Server and PHP upgrades from Zend Server 6.x to current Zend Server early-access version.
-
-    * PHP downgrades are not supported, e.g. from Zend Server 6.x PHP 5.4 to Zend Server 6.x 
-    PHP 5.3. See Limitations below for more inforamtion on which upgrades are not supported. 
-
-    * Upgrades between different early-access versions is not currently tested and although it works ,it is advised to uninstall and install
+* PHP downgrades are not supported, e.g. from Zend Server 6.x PHP 5.4 to Zend Server 6.x 
+  PHP 5.3. See Limitations below for more inforamtion on which upgrades are not supported. 
 
 Installing or Upgrading Zend Server Using the Linux Repository Installation Script
 ==================================================================================
@@ -75,10 +69,8 @@ DEB repositories:
 RPM repositories:
 * Red Hat Enterprise Linux 5
 * Red Hat Enterprise Linux 6
-* Red Hat Enterprise Linux 7
 * CentOS 5
 * CentOS 6
-* CentOS 7
 * Oracle Enterprise Linux 5
 * Oracle Enterprise Linux 6
 * SLES 11
@@ -88,9 +80,9 @@ Limitations
 ===========
 The installation script cannot be used in the following scenarios:
 * When attempting to upgrade from Zend Server 6.0 Beta
-* When attempting to upgrade from Zend Server 5.6 with PHP 5.4 Technology Preview
+* When attempting to upgrade from Zend Server 5.6 with PHP 5.4 Technology Preview
 * When attempting to upgrade from a Zend Server version below 5.6.0
-* When attempting to downgrade a PHP version
+* When attempting to downgrade a PHP version
 * When attempting to upgrade a Web server (e.g. from Zend Server with Apache to Zend Server with nginx)
 
 Further Information and Documentation

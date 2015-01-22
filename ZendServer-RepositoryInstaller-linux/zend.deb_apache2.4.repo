@@ -1,1 +1,1 @@
-deb http://repos.zend.com/zend-server/8.0.0-beta/deb_apache2.4 server non-free
+deb http://repos.zend.com/zend-server/8.0/deb_apache2.4 server non-free
